@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Spp.API.Data;
 
 namespace Spp.API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20211002035116_ProyectoViewModel")]
+    partial class ProyectoViewModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -411,7 +413,7 @@ namespace Spp.API.Migrations
             modelBuilder.Entity("Spp.Data.Entities.Proyecto", b =>
                 {
                     b.HasOne("Spp.Data.Entities.Fondo", "Fondo")
-                        .WithMany("Proyectos")
+                        .WithMany()
                         .HasForeignKey("FondoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -422,11 +424,6 @@ namespace Spp.API.Migrations
             modelBuilder.Entity("Spp.API.Data.Entities.TipoDocumento", b =>
                 {
                     b.Navigation("Users");
-                });
-
-            modelBuilder.Entity("Spp.Data.Entities.Fondo", b =>
-                {
-                    b.Navigation("Proyectos");
                 });
 #pragma warning restore 612, 618
         }

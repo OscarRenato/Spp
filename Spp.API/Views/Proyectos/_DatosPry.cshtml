@@ -1,0 +1,88 @@
+﻿@using Spp.Common.Enums
+@model Spp.API.Models.ProyectoViewModel
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="form-group">
+            <label asp-for="ProyectoNro" class="control-label"></label>
+            <input asp-for="ProyectoNro" class="form-control" />
+            <span asp-validation-for="ProyectoNro" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Empresa" class="control-label"></label>
+            <input asp-for="Empresa" class="form-control" />
+            <span asp-validation-for="Empresa" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="EmpresaRuc" class="control-label"></label>
+            <input asp-for="EmpresaRuc" class="form-control" />
+            <span asp-validation-for="EmpresaRuc" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="EmpresaRepresentante" class="control-label"></label>
+            <input asp-for="EmpresaRepresentante" class="form-control" />
+            <span asp-validation-for="EmpresaRepresentante" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Monto" class="control-label"></label>
+            <input asp-for="Monto" class="form-control" />
+            <span asp-validation-for="Monto" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="form-group">
+            <label asp-for="TipoMoneda" class="control-label"></label>
+            <select asp-for="TipoMoneda" class="form-control" asp-items="Html.GetEnumSelectList<TipoMonedaEnum>()">
+                <option>Selecciona moneda...</option>
+            </select>
+            <span asp-validation-for="TipoMoneda" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="TipoPago" class="control-label"></label>
+            <select asp-for="TipoPago" class="form-control" asp-items="Html.GetEnumSelectList<TipoPagoEnum>()">
+                <option>Selecciona Financiamiento...</option>
+            </select>
+            <span asp-validation-for="TipoPago" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Comision" class="control-label"></label>
+            <input asp-for="Comision" class="form-control" />
+            <span asp-validation-for="Comision" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="FContrato" class="control-label"></label>
+            <input asp-for="FContrato" class="form-control" />
+            <span asp-validation-for="FContrato" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="DireccionFinanc" class="control-label"></label>
+            <input asp-for="DireccionFinanc" class="form-control" />
+            <span asp-validation-for="DireccionFinanc" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="form-group">
+            <label asp-for="MontoFinal" class="control-label"></label>
+            <input asp-for="MontoFinal" class="form-control" />
+            <span asp-validation-for="MontoFinal" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="FondoId" class="control-label"></label>
+            <select asp-for="FondoId" asp-items="Model.Fondos" class="form-control"></select>
+            <span asp-validation-for="FondoId" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="FIngreso" class="control-label"></label>
+            <input asp-for="FIngreso" class="form-control" />
+            <span asp-validation-for="FIngreso" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Observacion" class="control-label"></label>
+            <textarea asp-for="Observacion" class="form-control"></textarea>
+            <span asp-validation-for="Observacion" class="text-danger"></span>
+        </div>
+    </div>
+
+</div>

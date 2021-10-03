@@ -1,21 +1,20 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using Spp.Data.Entities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Spp.Data.Entities
+namespace Spp.API.Models
 {
-    public class Proyecto
+    public class ProyectoViewModel
     {
         public int Id { get; set; }
 
-        //public int FondoId { get; set; }
-
         [Display(Name = "Fondo")]
-        [Required(ErrorMessage = "El campo {0} es obligatorio.")]
-        public Fondo Fondo { get; set; }
+        [Range(1, int.MaxValue, ErrorMessage = "Seleccione un Fondo.")]
+        public int FondoId { get; set; }
 
         [DisplayName("Proy Nro")]
         [Column(TypeName = "nvarchar(20)")]
@@ -72,5 +71,19 @@ namespace Spp.Data.Entities
         [DataType(DataType.MultilineText)]
         public string Observacion { get; set; }
 
+        public IEnumerable<SelectListItem> Fondos { get; set; }
+
+        //public TipoMonedaEnum TipoMonedaEnum { get; set; }
+
+        //public TipoPagoEnum TipoPagoEnum { get; set; }
+
+        //[Display(Name = "Tipo Moneda")]
+        //public string TipoMonedaName { get; set; }
+
+        //[Display(Name = "Tipo Financiamiento")]
+        //public string TipoPagoName { get; set; }
+
+        //[Display(Name = "Fondo Financiamiento")]
+        //public string FondoName { get; set; }
     }
 }

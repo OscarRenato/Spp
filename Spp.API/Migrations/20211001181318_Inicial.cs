@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Spp.API.Migrations
 {
-    public partial class Initial : Migration
+    public partial class Inicial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -78,18 +78,18 @@ namespace Spp.API.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    FondoId = table.Column<int>(type: "int", nullable: false),
                     ProyectoNro = table.Column<string>(type: "nvarchar(20)", nullable: true),
                     Empresa = table.Column<string>(type: "nvarchar(300)", nullable: true),
                     EmpresaRuc = table.Column<string>(type: "nvarchar(20)", nullable: true),
                     EmpresaRepresentante = table.Column<string>(type: "nvarchar(300)", nullable: true),
                     Monto = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     TipoMoneda = table.Column<int>(type: "int", nullable: false),
-                    Tipo = table.Column<int>(type: "int", nullable: false),
+                    TipoPago = table.Column<int>(type: "int", nullable: false),
                     Comision = table.Column<string>(type: "nvarchar(50)", nullable: true),
                     FContrato = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DireccionFinanc = table.Column<string>(type: "nvarchar(300)", nullable: true),
                     MontoFinal = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    FondoId = table.Column<int>(type: "int", nullable: true),
                     FIngreso = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Observacion = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
@@ -101,7 +101,7 @@ namespace Spp.API.Migrations
                         column: x => x.FondoId,
                         principalTable: "Fondos",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -112,7 +112,6 @@ namespace Spp.API.Migrations
                     FirstName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     TipoDocumentoId = table.Column<int>(type: "int", nullable: false),
-                    Telefono = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     Address = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
                     FInicio = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ImageId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),

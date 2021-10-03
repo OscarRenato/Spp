@@ -1,5 +1,6 @@
 ﻿using Spp.API.Data.Entities;
 using Spp.API.Helpers;
+using Spp.API.Models;
 using Spp.Common.Enums;
 using Spp.Data.Entities;
 using System;
@@ -12,11 +13,15 @@ namespace Spp.API.Data
     {
         private readonly DataContext _context;
         private readonly IUserHelper _userHelper;
+        private readonly IConverterHelper _converterHelper;
+        private readonly ICombosHelper _combosHelper;
 
-        public SeedDb(DataContext context, IUserHelper userHelper)
+        public SeedDb(DataContext context, IUserHelper userHelper, IConverterHelper converterHelper, ICombosHelper combosHelper)
         {
             _context = context;
             _userHelper = userHelper;
+            _converterHelper = converterHelper;
+            _combosHelper = combosHelper;
         }
 
         public async Task SeedAsync()
@@ -93,57 +98,67 @@ namespace Spp.API.Data
         {
             if (!_context.Proyectos.Any())
             {
-                _context.Proyectos.Add(new Proyecto
-                {
-                    ProyectoNro = "CSN-001",
-                    Empresa = "DYCSA",
-                    EmpresaRuc = "10084575690",
-                    EmpresaRepresentante = "Mario Salvatierra",
-                    Monto = 100000,
-                    TipoMoneda = 11,
-                    TipoPago = 12,
-                    Comision = "3%",
-                    FContrato = Convert.ToDateTime("2020/08/10"),
-                    DireccionFinanc = "Av. Alfonso Ugarte 2932, Lima",
-                    MontoFinal = 100000,
-                    FondoId = 2,
-                    FIngreso = Convert.ToDateTime("2018/04/09"),
-                    Observacion = "Construccion de un parque de diversiones"
-                });
-                _context.Proyectos.Add(new Proyecto
-                {
-                    ProyectoNro = "TRP-002",
-                    Empresa = "CRUZ DEL SUR",
-                    EmpresaRuc = "10084587690",
-                    EmpresaRepresentante = "Julio Martinez",
-                    Monto = 1900000,
-                    TipoMoneda = 10,
-                    TipoPago = 11,
-                    Comision = "5%",
-                    FContrato = Convert.ToDateTime("2021/02/10"),
-                    DireccionFinanc = "Av. Izaguirre 3239, Los Oivos",
-                    MontoFinal = 1500000,
-                    FondoId = 3,
-                    FIngreso = Convert.ToDateTime("2021/06/09"),
-                    Observacion = "Ampliacion de buses para nuevas rutas nacionales"
-                });
-                _context.Proyectos.Add(new Proyecto
-                {
-                    ProyectoNro = "CSN-002",
-                    Empresa = "SOTO construccion",
-                    EmpresaRuc = "30066575690",
-                    EmpresaRepresentante = "Ernesto Soto",
-                    Monto = 3100000,
-                    TipoMoneda = 10,
-                    TipoPago = 12,
-                    Comision = "5%",
-                    FContrato = Convert.ToDateTime("2019/03/23"),
-                    DireccionFinanc = "Av. Palmeras 8483, Chorrillos",
-                    MontoFinal = 3100000,
-                    FondoId = 1,
-                    FIngreso = Convert.ToDateTime("2018/05/19"),
-                    Observacion = "Construccion de edificio para viviendas economicas"
-                });
+                ProyectoViewModel model = new ProyectoViewModel();
+                
+                // 1er registro
+                model.ProyectoNro = "CSN-001";
+                model.Empresa = "DYCSA";
+                model.EmpresaRuc = "1008575690";
+                model.EmpresaRepresentante = "Mario Moreno";
+                model.Monto = 100000;
+                model.TipoMoneda = 11;
+                model.TipoPago = 12;
+                model.Comision = "3%";
+                model.FContrato = Convert.ToDateTime("2020/08/10");
+                model.DireccionFinanc = "Av. Alfonso Ugarte 2932, Lima";
+                model.MontoFinal = 100000;
+                model.FondoId = 2;
+                model.FIngreso = Convert.ToDateTime("2018/04/09");
+                model.Observacion = "Construccion de un parque de diversiones";
+                model.Fondos = _combosHelper.GetComboFondos();
+
+                Proyecto proyecto = await _converterHelper.ToProyectoAsync(model, true);
+                _context.Proyectos.Add(proyecto);
+                await _context.SaveChangesAsync();
+
+                // 2do registro
+                model.ProyectoNro = "TRP-002";
+                model.Empresa = "CRUZ DEL SUR";
+                model.EmpresaRuc = "10084587690";
+                model.EmpresaRepresentante = "Julio Martinez";
+                model.Monto = 1900000;
+                model.TipoMoneda = 10;
+                model.TipoPago = 11;
+                model.Comision = "5%";
+                model.FContrato = Convert.ToDateTime("2021/02/10");
+                model.DireccionFinanc = "Av. Izaguirre 3239, Los Oivos";
+                model.MontoFinal = 1500000;
+                model.FondoId = 3;
+                model.FIngreso = Convert.ToDateTime("2021/06/09");
+                model.Observacion = "Ampliacion de buses para nuevas rutas nacionales";
+
+                Proyecto proyecto1 = await _converterHelper.ToProyectoAsync(model, true);
+                _context.Proyectos.Add(proyecto1);
+                await _context.SaveChangesAsync();
+
+                // 3er registro
+                model.ProyectoNro = "CSN-002";
+                model.Empresa = "SOTO construccion";
+                model.EmpresaRuc = "30066575690";
+                model.EmpresaRepresentante = "Ernesto Soto";
+                model.Monto = 3100000;
+                model.TipoMoneda = 10;
+                model.TipoPago = 12;
+                model.Comision = "5%";
+                model.FContrato = Convert.ToDateTime("2019/03/23");
+                model.DireccionFinanc = "Av. Palmeras 8483, Chorrillos";
+                model.MontoFinal = 3100000;
+                model.FondoId = 1;
+                model.FIngreso = Convert.ToDateTime("2018/05/19");
+                model.Observacion = "Construccion de edificio para viviendas economicas";
+
+                Proyecto proyecto2 = await _converterHelper.ToProyectoAsync(model, true);
+                _context.Proyectos.Add(proyecto2);
                 await _context.SaveChangesAsync();
             }
         }

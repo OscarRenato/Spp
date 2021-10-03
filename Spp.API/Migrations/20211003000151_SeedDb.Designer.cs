@@ -10,8 +10,8 @@ using Spp.API.Data;
 namespace Spp.API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20210930030655_Initial")]
-    partial class Initial
+    [Migration("20211003000151_SeedDb")]
+    partial class SeedDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -237,11 +237,6 @@ namespace Spp.API.Migrations
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Telefono")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
-
                     b.Property<int>("TipoDocumentoId")
                         .HasColumnType("int");
 
@@ -325,7 +320,7 @@ namespace Spp.API.Migrations
                     b.Property<DateTime>("FIngreso")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("FondoId")
+                    b.Property<int>("FondoId")
                         .HasColumnType("int");
 
                     b.Property<decimal>("Monto")
@@ -340,10 +335,10 @@ namespace Spp.API.Migrations
                     b.Property<string>("ProyectoNro")
                         .HasColumnType("nvarchar(20)");
 
-                    b.Property<int>("Tipo")
+                    b.Property<int>("TipoMoneda")
                         .HasColumnType("int");
 
-                    b.Property<int>("TipoMoneda")
+                    b.Property<int>("TipoPago")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -418,8 +413,10 @@ namespace Spp.API.Migrations
             modelBuilder.Entity("Spp.Data.Entities.Proyecto", b =>
                 {
                     b.HasOne("Spp.Data.Entities.Fondo", "Fondo")
-                        .WithMany()
-                        .HasForeignKey("FondoId");
+                        .WithMany("Proyectos")
+                        .HasForeignKey("FondoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Fondo");
                 });
@@ -427,6 +424,11 @@ namespace Spp.API.Migrations
             modelBuilder.Entity("Spp.API.Data.Entities.TipoDocumento", b =>
                 {
                     b.Navigation("Users");
+                });
+
+            modelBuilder.Entity("Spp.Data.Entities.Fondo", b =>
+                {
+                    b.Navigation("Proyectos");
                 });
 #pragma warning restore 612, 618
         }
